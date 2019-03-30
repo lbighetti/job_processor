@@ -2,6 +2,8 @@
 
 >An HTTP job processing service.
 
+[![CircleCI](https://circleci.com/gh/lbighetti/job_processor.svg?style=svg&circle-token=92be9252e9b7cf812afa5ecd9110a8933661ac95)](https://circleci.com/gh/lbighetti/job_processor)
+
 ## Overview
 
 Here the definition of a job is a collection of tasks, where each task has a name and a shell command. Tasks may depend on other tasks and require that those are executed beforehand. This service takes care of sorting the tasks to create a proper execution order.
