@@ -45,7 +45,7 @@ Here the definition of a job is a collection of tasks, where each task has a nam
 
 The server can respond in two format: JSON and bash script in the form of text.
 
-### JSON
+#### JSON
 
 The above example will be processed to this response:
 
@@ -70,7 +70,7 @@ The above example will be processed to this response:
 ]
 ```
 
-### Bash Script
+#### Bash Script
 
 The bash script response will be of type text, and will look like this:
 
