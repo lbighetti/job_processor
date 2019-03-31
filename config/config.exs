@@ -8,7 +8,7 @@
 use Mix.Config
 
 config :job_processor,
-  ecto_repos: [JobProcessor.Repo]
+  ecto_repos: []
 
 # Configures the endpoint
 config :job_processor, JobProcessorWeb.Endpoint,

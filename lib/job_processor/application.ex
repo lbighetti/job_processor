@@ -8,8 +8,6 @@ defmodule JobProcessor.Application do
   def start(_type, _args) do
     # List all child processes to be supervised
     children = [
-      # Start the Ecto repository
-      JobProcessor.Repo,
       # Start the endpoint when the application starts
       JobProcessorWeb.Endpoint
       # Starts a worker by calling: JobProcessor.Worker.start_link(arg)

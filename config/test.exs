@@ -9,10 +9,3 @@ config :job_processor, JobProcessorWeb.Endpoint,
 # Print only warnings and errors during test
 config :logger, level: :warn
 
-# Configure your database
-config :job_processor, JobProcessor.Repo,
-  username: "postgres",
-  password: "",
-  database: "job_processor_test",
-  hostname: "localhost",
-  pool: Ecto.Adapters.SQL.Sandbox
