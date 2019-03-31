@@ -1,4 +1,4 @@
-# defmodule JobProcessorWeb.JobControllerTest do
+# defmodule JobProcessorWeb.TaskControllerTest do
 #   use JobProcessorWeb.ConnCase
 
 #   alias JobProcessor.Core

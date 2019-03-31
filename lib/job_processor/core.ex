@@ -5,7 +5,8 @@ defmodule JobProcessor.Core do
 
   import Ecto.Query, warn: false
 
-  alias JobProcessor.Core.Job
+  alias JobProcessor.Core.Task
+  alias JobProcessor.Core
 
   @doc """
   Creates a job.
@@ -19,9 +20,22 @@ defmodule JobProcessor.Core do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_job(attrs \\ %{}) do
-    %Job{}
-    |> Job.changeset(attrs)
+  def parse_task(attrs \\ %{}) do
+    %Task{}
+    |> Task.changeset(attrs)
     |> Ecto.Changeset.apply_action(:insert)
+  end
+
+  def parse_tasks(tasks) do
+    tasks
+    |> Enum.map(&Core.parse_task/1)
+  end
+
+  def process_job (tasks) do
+    # tasks = parse_tasks(tasks)
+    # case tasks do
+    #   {:ok, tasks} ->
+
+    # end
   end
 end

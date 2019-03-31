@@ -3,30 +3,54 @@ defmodule JobProcessor.CoreTest do
 
   alias JobProcessor.Core
 
-  describe "jobs" do
-    alias JobProcessor.Core.Job
+  describe "tasks" do
+    alias JobProcessor.Core.Task
 
-    @valid_attrs %{command: "some command", name: "some name", requires: ["some job"]}
+    @valid_attrs %{command: "some command", name: "some name", requires: ["some task"]}
     @invalid_attrs %{command: nil, name: nil, requires: nil}
+    @valid_tasks_json [
+         %{
+            "name"=>"task-1",
+            "command"=>"touch /tmp/file1"
+         },
+         %{
+            "name"=>"task-2",
+            "command"=>"cat /tmp/file1",
+            "requires"=>[
+               "task-3"
+            ]
+         },
+         %{
+            "name"=>"task-3",
+            "command"=>"echo 'Hello World!' > /tmp/file1",
+            "requires"=>[
+               "task-1"
+            ]
+         },
+         %{
+            "name"=>"task-4",
+            "command"=>"rm /tmp/file1",
+            "requires"=>[
+               "task-2",
+               "task-3"
+            ]
+         }
+      ]
 
-    def job_fixture(attrs \\ %{}) do
-      {:ok, job} =
-        attrs
-        |> Enum.into(@valid_attrs)
-        |> Core.create_job()
-
-      job
+    test "parse_task/1 with valid data returns a task" do
+      assert {:ok, %Task{} = task} = Core.parse_task(@valid_attrs)
+      assert task.command == "some command"
+      assert task.name == "some name"
+      assert task.requires == ["some task"]
     end
 
-    test "create_job/1 with valid data creates a job" do
-      assert {:ok, %Job{} = job} = Core.create_job(@valid_attrs)
-      assert job.command == "some command"
-      assert job.name == "some name"
-      assert job.requires == ["some job"]
+    test "parse_task/1 with invalid data returns error changeset" do
+      assert {:error, %Ecto.Changeset{}} = Core.parse_task(@invalid_attrs)
     end
 
-    test "create_job/1 with invalid data returns error changeset" do
-      assert {:error, %Ecto.Changeset{}} = Core.create_job(@invalid_attrs)
+    test "parse_tasks/1 with valid data returns a task" do
+      assert parsed_tasks = Core.parse_tasks(@valid_tasks_json)
+      refute parsed_tasks |> Enum.any?(fn {atom, _task} -> atom == :error end)
     end
   end
 end

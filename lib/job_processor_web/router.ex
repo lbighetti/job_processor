@@ -5,7 +5,9 @@ defmodule JobProcessorWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/api", JobProcessorWeb do
+  scope "/", JobProcessorWeb do
     pipe_through :api
+
+    post "/process_job", TaskController, :process_job
   end
 end

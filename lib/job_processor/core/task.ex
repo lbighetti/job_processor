@@ -1,8 +1,8 @@
-defmodule JobProcessor.Core.Job do
+defmodule JobProcessor.Core.Task do
   use Ecto.Schema
   import Ecto.Changeset
 
-  schema "jobs" do
+  schema "tasks" do
     field :command, :string
     field :name, :string
     field :requires, {:array, :string}
@@ -14,6 +14,6 @@ defmodule JobProcessor.Core.Job do
   def changeset(job, attrs) do
     job
     |> cast(attrs, [:name, :command, :requires])
-    |> validate_required([:name, :command, :requires])
+    |> validate_required([:name, :command])
   end
 end
