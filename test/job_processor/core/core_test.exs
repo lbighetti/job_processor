@@ -9,33 +9,33 @@ defmodule JobProcessor.CoreTest do
     @valid_attrs %{command: "some command", name: "some name", requires: ["some task"]}
     @invalid_attrs %{command: nil, name: nil, requires: nil}
     @valid_tasks [
-         %{
-            "name"=>"task-1",
-            "command"=>"touch /tmp/file1"
-         },
-         %{
-            "name"=>"task-2",
-            "command"=>"cat /tmp/file1",
-            "requires"=>[
-               "task-3"
-            ]
-         },
-         %{
-            "name"=>"task-3",
-            "command"=>"echo 'Hello World!' > /tmp/file1",
-            "requires"=>[
-               "task-1"
-            ]
-         },
-         %{
-            "name"=>"task-4",
-            "command"=>"rm /tmp/file1",
-            "requires"=>[
-               "task-2",
-               "task-3"
-            ]
-         }
-      ]
+      %{
+        "name" => "task-1",
+        "command" => "touch /tmp/file1"
+      },
+      %{
+        "name" => "task-2",
+        "command" => "cat /tmp/file1",
+        "requires" => [
+          "task-3"
+        ]
+      },
+      %{
+        "name" => "task-3",
+        "command" => "echo 'Hello World!' > /tmp/file1",
+        "requires" => [
+          "task-1"
+        ]
+      },
+      %{
+        "name" => "task-4",
+        "command" => "rm /tmp/file1",
+        "requires" => [
+          "task-2",
+          "task-3"
+        ]
+      }
+    ]
 
     test "parse_task/1 with valid data returns a task" do
       assert {:ok, %Task{} = task} = Core.parse_task(@valid_attrs)
@@ -54,7 +54,7 @@ defmodule JobProcessor.CoreTest do
     end
 
     test "process_job/1 with valid data returns a task list" do
-      IO.inspect Core.process_job(@valid_tasks)
+      IO.inspect(Core.process_job(@valid_tasks))
       # [ head_task tasks
     end
   end

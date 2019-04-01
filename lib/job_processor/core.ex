@@ -46,7 +46,8 @@ defmodule JobProcessor.Core do
           |> Enum.reduce(%{}, fn {_status, task}, acc -> Map.put(acc, task.name, task) end)
           |> order_tasks
 
-      {:ok, tasks}
+        {:ok, tasks}
+
       parse_errors ->
         errors =
           parse_errors
@@ -74,7 +75,10 @@ defmodule JobProcessor.Core do
         )
       end
     end)
-    |> Elixir.Graph.Reducers.Bfs.reduce([], fn v, acc -> {:next, [Map.get(task_map, v) | acc]} end)
+    |> Elixir.Graph.Reducers.Bfs.reduce(
+      [],
+      fn task_name, acc -> {:next, [Map.get(task_map, task_name) | acc]} end
+    )
     |> Enum.reverse()
   end
 end
