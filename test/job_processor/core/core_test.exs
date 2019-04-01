@@ -8,7 +8,7 @@ defmodule JobProcessor.CoreTest do
 
     @valid_attrs %{command: "some command", name: "some name", requires: ["some task"]}
     @invalid_attrs %{command: nil, name: nil, requires: nil}
-    @valid_tasks_json [
+    @valid_tasks [
          %{
             "name"=>"task-1",
             "command"=>"touch /tmp/file1"
@@ -49,8 +49,13 @@ defmodule JobProcessor.CoreTest do
     end
 
     test "parse_tasks/1 with valid data returns a task" do
-      assert parsed_tasks = Core.parse_tasks(@valid_tasks_json)
+      assert parsed_tasks = Core.parse_tasks(@valid_tasks)
       refute parsed_tasks |> Enum.any?(fn {atom, _task} -> atom == :error end)
+    end
+
+    test "process_job/1 with valid data returns a task list" do
+      IO.inspect Core.process_job(@valid_tasks)
+      # [ head_task tasks
     end
   end
 end

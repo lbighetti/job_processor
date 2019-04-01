@@ -6,8 +6,6 @@ defmodule JobProcessor.Core.Task do
     field :command, :string
     field :name, :string
     field :requires, {:array, :string}
-
-    timestamps()
   end
 
   @doc false

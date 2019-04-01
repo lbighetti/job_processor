@@ -41,7 +41,6 @@
 #     end
 #   end
 
-
 #   defp create_job(_) do
 #     job = fixture(:job)
 #     {:ok, job: job}
