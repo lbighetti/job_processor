@@ -9,7 +9,7 @@ defmodule JobProcessorWeb.TaskController do
     with {:ok, tasks} <- Core.process_job(params) do
       conn
       |> put_status(:ok)
-      |> render("index.json", tasks: tasks)
+      |> render("tasks.json", tasks: tasks)
     end
   end
 end
