@@ -38,33 +38,33 @@ defmodule JobProcessor.CoreTest do
     ]
 
     @invalid_tasks [
-    %{
-      "name" => nil,
-      "command" => "touch /tmp/file1"
-    },
-    %{
-      "name" => "task-2",
-      "command" => "cat /tmp/file1",
-      "requires" => [
-        "task-3"
-      ]
-    },
-    %{
-      "name" => "task-3",
-      "command" => nil,
-      "requires" => [
-        "task-1"
-      ]
-    },
-    %{
-      "name" => 213.23,
-      "command" => "rm /tmp/file1",
-      "requires" => [
-        "task-2",
-        "task-3"
-      ]
-    }
-  ]
+      %{
+        "name" => nil,
+        "command" => "touch /tmp/file1"
+      },
+      %{
+        "name" => "task-2",
+        "command" => "cat /tmp/file1",
+        "requires" => [
+          "task-3"
+        ]
+      },
+      %{
+        "name" => "task-3",
+        "command" => nil,
+        "requires" => [
+          "task-1"
+        ]
+      },
+      %{
+        "name" => 213.23,
+        "command" => "rm /tmp/file1",
+        "requires" => [
+          "task-2",
+          "task-3"
+        ]
+      }
+    ]
 
     test "parse_task/1 with valid data returns a task" do
       assert {:ok, %Task{} = task} = Core.parse_task(@valid_attrs)
