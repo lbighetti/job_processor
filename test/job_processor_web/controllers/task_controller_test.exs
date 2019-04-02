@@ -1,4 +1,4 @@
-# defmodule JobProcessorWeb.JobControllerTest do
+# defmodule JobProcessorWeb.TaskControllerTest do
 #   use JobProcessorWeb.ConnCase
 
 #   alias JobProcessor.Core
@@ -40,7 +40,6 @@
 #       assert json_response(conn, 422)["errors"] != %{}
 #     end
 #   end
-
 
 #   defp create_job(_) do
 #     job = fixture(:job)

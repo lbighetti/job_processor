@@ -11,9 +11,6 @@ defmodule JobProcessorWeb.JobView do
   end
 
   def render("job.json", %{job: job}) do
-    %{id: job.id,
-      name: job.name,
-      command: job.command,
-      requires: job.requires}
+    %{id: job.id, name: job.name, command: job.command, requires: job.requires}
   end
 end
