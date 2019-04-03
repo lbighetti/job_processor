@@ -1,9 +1,6 @@
 defmodule JobProcessorWeb.TaskControllerTest do
   use JobProcessorWeb.ConnCase
 
-  alias JobProcessor.Core
-  alias JobProcessor.Core.Job
-
   @valid_tasks [
     %{
       "name" => "task-1",
