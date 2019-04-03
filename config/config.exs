@@ -28,3 +28,13 @@ config :phoenix, :json_library, Jason
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"
+
+config :job_processor, :phoenix_swagger,
+  swagger_files: %{
+    "priv/static/swagger.json" => [
+      # phoenix routes will be converted to swagger paths
+      router: JobProcessorWeb.Router,
+      # (optional) endpoint config used to set host, port and https schemes.
+      endpoint: JobProcessorWeb.Endpoint
+    ]
+  }

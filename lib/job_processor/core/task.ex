@@ -12,6 +12,7 @@ defmodule JobProcessor.Core.Task do
   def changeset(job, attrs) do
     job
     |> cast(attrs, [:name, :command, :requires])
+    # TODO: name uniq identifier ? talvez has duplicates?
     |> validate_required([:name, :command])
   end
 end
