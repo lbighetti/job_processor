@@ -103,8 +103,9 @@ To start your Phoenix server:
 
 ## Todos
 
+- [ ] typespecs / dialyzer
 - [ ] bash feature
 - [ ] exdoc
-- [ ] typespecs / dialyzer
 - [ ] swagger
+  - [x] setup
   - [ ] post example

@@ -1,6 +1,6 @@
 defmodule JobProcessor.Core do
   @moduledoc """
-  The Core context.
+  The Core context, which is the entry point for the application.
   """
 
   import Ecto.Query, warn: false
@@ -9,32 +9,35 @@ defmodule JobProcessor.Core do
   alias JobProcessor.Core
 
   @doc """
-  Creates a job.
+  Parses a map with tasks parameters into the `JobProcessor.Core.Task` struct.
 
   ## Examples
 
-      iex> create_job(%{field: value})
-      {:ok, %Job{}}
+      iex> parse_task(%{name: "task-1", command: "touch /tmp/file1"})
+      {:ok, %Task{}}
 
       iex> create_job(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def parse_task(attrs \\ %{}) do
+  @spec parse_task(map()) :: {:ok, Task.t} | {:error, Ecto.Changeset.t}
+  def parse_task(attrs) do
     %Task{}
     |> Task.changeset(attrs)
     |> Ecto.Changeset.apply_action(:insert)
   end
 
+  @spec parse_tasks(map()) :: [{:ok, Task.t} | {:error, Ecto.Changeset.t}]
   def parse_tasks(tasks) do
     tasks
     |> Enum.map(&Core.parse_task/1)
   end
 
+  @spec process_job(map()) :: {:error, [Ecto.Changeset.t]} | {:ok, [Task.t]}
   def process_job(params) do
     parsed_tasks = parse_tasks(params)
 
-    # talvez fazer um função check for errors?
+    # TODO: talvez fazer um função check for errors?
     parse_errors =
       parsed_tasks
       |> Enum.filter(fn {status, _task} -> status == :error end)
@@ -57,6 +60,7 @@ defmodule JobProcessor.Core do
     end
   end
 
+  @spec order_tasks(map()) :: [Task.t] # TODO: improve this map() spec? define key as Task.name and value as Task
   def order_tasks(task_map) do
     # TODO: fazer acyclic test  e essas coisas depois pra ter certeza que é válido o graph
     # varias task não podem ter o mesmo nome, uniq ecto ? acho que não dá sem db. enum.map name enum.uniq

@@ -18,7 +18,8 @@ defmodule JobProcessor.MixProject do
         "coveralls.post": :test,
         "coveralls.html": :test,
         "coveralls.json": :test
-      ]
+      ],
+      dialyzer: [plt_add_deps: :transitive]
     ]
   end
 
