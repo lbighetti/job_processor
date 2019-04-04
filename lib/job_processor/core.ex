@@ -20,20 +20,20 @@ defmodule JobProcessor.Core do
       {:error, %Ecto.Changeset{}}
 
   """
-  @spec parse_task(map()) :: {:ok, Task.t} | {:error, Ecto.Changeset.t}
+  @spec parse_task(map()) :: {:ok, Task.t()} | {:error, Ecto.Changeset.t()}
   def parse_task(attrs) do
     %Task{}
     |> Task.changeset(attrs)
     |> Ecto.Changeset.apply_action(:insert)
   end
 
-  @spec parse_tasks(map()) :: [{:ok, Task.t} | {:error, Ecto.Changeset.t}]
+  @spec parse_tasks(map()) :: [{:ok, Task.t()} | {:error, Ecto.Changeset.t()}]
   def parse_tasks(tasks) do
     tasks
     |> Enum.map(&Core.parse_task/1)
   end
 
-  @spec process_job(map()) :: {:error, [Ecto.Changeset.t]} | {:ok, [Task.t]}
+  @spec process_job(map()) :: {:error, [Ecto.Changeset.t()]} | {:ok, [Task.t()]}
   def process_job(params) do
     parsed_tasks = parse_tasks(params)
 
@@ -60,7 +60,8 @@ defmodule JobProcessor.Core do
     end
   end
 
-  @spec order_tasks(map()) :: [Task.t] # TODO: improve this map() spec? define key as Task.name and value as Task
+  # TODO: improve this map() spec? define key as Task.name and value as Task
+  @spec order_tasks(map()) :: [Task.t()]
   def order_tasks(task_map) do
     # TODO: fazer acyclic test  e essas coisas depois pra ter certeza que é válido o graph
     # varias task não podem ter o mesmo nome, uniq ecto ? acho que não dá sem db. enum.map name enum.uniq

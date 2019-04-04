@@ -14,7 +14,7 @@ defmodule JobProcessor.Core.Task do
     field :requires, {:array, :string}
   end
 
-  @type name :: String.t
+  @type name :: String.t()
 
   @typedoc """
   The Task struct.
@@ -26,10 +26,10 @@ defmodule JobProcessor.Core.Task do
   * `:requires`: Which tasks are required to run before this one can run. This is optional.
   """
   @type t :: %__MODULE__{
-    name: name,
-    command: String.t,
-    requires: [String.t]
-  }
+          name: name,
+          command: String.t(),
+          requires: [String.t()]
+        }
 
   @doc false
   def changeset(job, attrs) do

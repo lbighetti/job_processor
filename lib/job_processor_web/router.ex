@@ -12,7 +12,9 @@ defmodule JobProcessorWeb.Router do
   end
 
   scope "/api/swagger" do
-    forward "/", PhoenixSwagger.Plug.SwaggerUI, otp_app: :job_processor, swagger_file: "swagger.json"
+    forward "/", PhoenixSwagger.Plug.SwaggerUI,
+      otp_app: :job_processor,
+      swagger_file: "swagger.json"
   end
 
   def swagger_info do
