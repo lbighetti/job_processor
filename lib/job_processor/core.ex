@@ -37,7 +37,7 @@ defmodule JobProcessor.Core do
   def process_job(params) do
     parsed_tasks = parse_tasks(params)
 
-    # TODO: talvez fazer um função check for errors?
+
     parse_errors =
       parsed_tasks
       |> Enum.filter(fn {status, _task} -> status == :error end)
@@ -60,12 +60,22 @@ defmodule JobProcessor.Core do
     end
   end
 
-  # TODO: improve this map() spec? define key as Task.name and value as Task
   @spec order_tasks(map()) :: [Task.t()]
   def order_tasks(task_map) do
-    # TODO: fazer acyclic test  e essas coisas depois pra ter certeza que é válido o graph
-    # varias task não podem ter o mesmo nome, uniq ecto ? acho que não dá sem db. enum.map name enum.uniq
+    graph = build_graph(task_map)
+    generate_ordered_task_list(graph, task_map)
+  end
 
+  defp generate_ordered_task_list(graph, task_map) do
+    Elixir.Graph.Reducers.Bfs.reduce(graph,
+      [],
+      fn task_name, acc -> {:next, [Map.get(task_map, task_name) | acc]} end
+    )
+    |> Enum.reverse()
+  end
+
+
+  defp build_graph(task_map) do
     g = Graph.new()
     tasks = Map.values(task_map)
 
@@ -80,10 +90,5 @@ defmodule JobProcessor.Core do
         )
       end
     end)
-    |> Elixir.Graph.Reducers.Bfs.reduce(
-      [],
-      fn task_name, acc -> {:next, [Map.get(task_map, task_name) | acc]} end
-    )
-    |> Enum.reverse()
   end
 end

@@ -103,8 +103,13 @@ To start your Phoenix server:
 
 ## Todos
 
-- [ ] typespecs / dialyzer
 - [ ] bash feature
+- [ ] improvements
+  - [ ] task names not duplicate
+  - [ ] graph aciclyc
+  - [ ] improve this map() spec? define key as Task.name and value as Task
+- [ ] typespecs / dialyzer
+  - [x] core
 - [ ] exdoc
 - [ ] swagger
   - [x] setup
