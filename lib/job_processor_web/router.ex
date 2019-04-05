@@ -2,7 +2,7 @@ defmodule JobProcessorWeb.Router do
   use JobProcessorWeb, :router
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug :accepts, ["json", "text"]
   end
 
   scope "/", JobProcessorWeb do

@@ -118,10 +118,27 @@ defmodule JobProcessorWeb.TaskController do
   end
 
   def process_job(conn, %{"tasks" => params}) do
+
     with {:ok, tasks} <- Core.process_job(params) do
-      conn
-      |> put_status(:ok)
-      |> render("tasks.json", tasks: tasks)
+      case get_format(conn) do
+        "json" ->
+          conn
+          |> put_status(:ok)
+          |> render("tasks.json", tasks: tasks)
+        "text" ->
+          bash_script = format_bash_script(tasks)
+          conn
+          |> put_status(:ok)
+          |> text(bash_script)
+      end
     end
+  end
+
+  defp format_bash_script(tasks) do
+    command_list =
+      tasks
+      |> Enum.map(fn task -> "#{task.command}\r\n" end)
+    header = "#!/usr/bin/env bash\r\n\r\n"
+    [header | command_list]
   end
 end
