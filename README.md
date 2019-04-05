@@ -88,7 +88,7 @@ rm /tmp/file1
 This way, it's possible to run it directly like so:
 
 ```bash
-$ curl -d @mytasks.json http://localhost:4000/... | bash
+$ curl -d @mytasks.json -X POST -H 'Accept: text/plain' -H "Content-Type:application/json" http://localhost:4000/process_job | bash
 ```
 
 ## Development
