@@ -1,6 +1,6 @@
 # JobProcessor
-
->An HTTP job processing service.
+![job processor logo](https://hopeful-bose-df991f.netlify.com/plan.png)
+> An HTTP job processing service.
 
 [![CircleCI](https://circleci.com/gh/lbighetti/job_processor.svg?style=svg&circle-token=92be9252e9b7cf812afa5ecd9110a8933661ac95)](https://circleci.com/gh/lbighetti/job_processor)[![codecov](https://codecov.io/gh/lbighetti/job_processor/branch/master/graph/badge.svg)](https://codecov.io/gh/lbighetti/job_processor)
 

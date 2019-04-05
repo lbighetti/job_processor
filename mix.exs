@@ -19,7 +19,12 @@ defmodule JobProcessor.MixProject do
         "coveralls.html": :test,
         "coveralls.json": :test
       ],
-      dialyzer: [plt_add_deps: :transitive]
+      dialyzer: [plt_add_deps: :transitive],
+      docs: [
+        main: "README",
+        logo: "./logo.png",
+        extras: ["README.md"]
+      ]
     ]
   end
 
