@@ -60,11 +60,14 @@ defmodule JobProcessorWeb.TaskController do
   swagger_path(:process_job) do
     post("/process_job")
     summary("This service orders the task list in a suitable order")
+
     description(
       "The service will parse the given tasks and order them so they're suitable order for execution"
     )
+
     consumes("application/json")
     produces("application/json")
+    produces("text/plain")
     deprecated(false)
 
     parameter(:tasks, :body, Schema.ref(:TasksRequest), "The task details",
@@ -93,40 +96,46 @@ defmodule JobProcessorWeb.TaskController do
       }
     )
 
-    response(200, "OK", Schema.ref(:TasksResponse),
-      example: %{
-        tasks: [
-          %{
-            name: "task-1",
-            command: "touch /tmp/file1"
-          },
-          %{
-            name: "task-3",
-            command: "echo 'Hello World!' > /tmp/file1"
-          },
-          %{
-            name: "task-2",
-            command: "cat /tmp/file1"
-          },
-          %{
-            name: "task-4",
-            command: "rm /tmp/file1"
-          }
-        ]
+    response(200, "OK", :TasksResponse,
+      examples: %{
+        "application/json": %{
+          tasks: [
+            %{
+              name: "task-1",
+              command: "touch /tmp/file1"
+            },
+            %{
+              name: "task-3",
+              command: "echo 'Hello World!' > /tmp/file1"
+            },
+            %{
+              name: "task-2",
+              command: "cat /tmp/file1"
+            },
+            %{
+              name: "task-4",
+              command: "rm /tmp/file1"
+            }
+          ]
+        },
+        "text/plain": "#!/usr/bin/env bash\r\n\r\ntouch /tmp/file1\r\necho 'Hello World!' > /tmp/file1\r\ncat /tmp/file1\r\nrm /tmp/file1\r\n"
       }
     )
+
+    # response 200, "Success", :User, examples: %{"application/json": %{id: 1, name: "Joe"}}
   end
 
   def process_job(conn, %{"tasks" => params}) do
-
     with {:ok, tasks} <- Core.process_job(params) do
       case get_format(conn) do
         "json" ->
           conn
           |> put_status(:ok)
           |> render("tasks.json", tasks: tasks)
+
         "text" ->
           bash_script = format_bash_script(tasks)
+
           conn
           |> put_status(:ok)
           |> text(bash_script)
@@ -138,6 +147,7 @@ defmodule JobProcessorWeb.TaskController do
     command_list =
       tasks
       |> Enum.map(fn task -> "#{task.command}\r\n" end)
+
     header = "#!/usr/bin/env bash\r\n\r\n"
     [header | command_list]
   end

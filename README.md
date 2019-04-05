@@ -103,7 +103,7 @@ To start your Phoenix server:
 
 ## Todos
 
-- [ ] bash feature
+- [x] bash feature
 - [ ] improvements
   - [ ] task names not duplicate
   - [ ] graph aciclyc

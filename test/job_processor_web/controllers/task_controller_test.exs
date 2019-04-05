@@ -77,6 +77,7 @@ defmodule JobProcessorWeb.TaskControllerTest do
 
     test "renders errors when data is invalid", %{conn: conn} do
       conn = post(conn, Routes.task_path(conn, :process_job), tasks: @invalid_tasks)
+
       assert [
                %{"errors" => %{"name" => ["can't be blank"]}},
                %{"errors" => %{"command" => ["can't be blank"]}},
@@ -91,7 +92,9 @@ defmodule JobProcessorWeb.TaskControllerTest do
 
       conn = post(conn, Routes.task_path(conn, :process_job), tasks: @valid_tasks)
       response = text_response(conn, 200)
-      assert response == "#!/usr/bin/env bash\r\n\r\ntouch /tmp/file1\r\necho 'Hello World!' > /tmp/file1\r\ncat /tmp/file1\r\nrm /tmp/file1\r\n"
+
+      assert response ==
+               "#!/usr/bin/env bash\r\n\r\ntouch /tmp/file1\r\necho 'Hello World!' > /tmp/file1\r\ncat /tmp/file1\r\nrm /tmp/file1\r\n"
     end
   end
 end
