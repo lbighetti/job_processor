@@ -12,11 +12,4 @@ defmodule JobProcessorWeb.FallbackController do
     |> put_view(JobProcessorWeb.ChangesetView)
     |> render("errors.json", changesets: changesets)
   end
-
-  def call(conn, {:error, %Ecto.Changeset{} = changeset}) do
-    conn
-    |> put_status(:unprocessable_entity)
-    |> put_view(JobProcessorWeb.ChangesetView)
-    |> render("error.json", changeset: changeset)
-  end
 end
