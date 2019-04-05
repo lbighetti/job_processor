@@ -118,7 +118,8 @@ defmodule JobProcessorWeb.TaskController do
             }
           ]
         },
-        "text/plain": "#!/usr/bin/env bash\r\n\r\ntouch /tmp/file1\r\necho 'Hello World!' > /tmp/file1\r\ncat /tmp/file1\r\nrm /tmp/file1\r\n"
+        "text/plain":
+          "#!/usr/bin/env bash\r\n\r\ntouch /tmp/file1\r\necho 'Hello World!' > /tmp/file1\r\ncat /tmp/file1\r\nrm /tmp/file1\r\n"
       }
     )
 
@@ -141,6 +142,13 @@ defmodule JobProcessorWeb.TaskController do
           |> text(bash_script)
       end
     end
+  end
+
+  def process_job(conn, _) do
+    conn
+    |> put_status(:unprocessable_entity)
+    |> put_view(JobProcessorWeb.ErrorView)
+    |> render(:"422")
   end
 
   defp format_bash_script(tasks) do

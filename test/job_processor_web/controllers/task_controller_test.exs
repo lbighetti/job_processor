@@ -85,6 +85,11 @@ defmodule JobProcessorWeb.TaskControllerTest do
              ] == json_response(conn, 422)
     end
 
+    test "renders errors when request missing proper body", %{conn: conn} do
+      conn = post(conn, Routes.task_path(conn, :process_job), wrong: @invalid_tasks)
+      assert json_response(conn, 422)
+    end
+
     test "renders text response when data is valid", %{conn: conn} do
       conn =
         conn
