@@ -136,3 +136,14 @@ You can update or re-generate this documentation with
 * `mix docs && open doc/index.html`
 
 
+## Design decisions, assumptions and reasoning
+
+### Assumptions
+
+I made the assumption that authentication, authorization and persistence are outside of scope of this test.
+
+### Phoenix
+
+For functionality exposed via HTTP, Phoenix seemed like a good choice. It has great productivity, facilitators, code generators and much more at the cost of very little overhead.
+I started a new phoenix app without frontend and also without Ecto, because of the above assumptions.
+

@@ -7,6 +7,7 @@ defmodule JobProcessor.Application do
     children = [
       JobProcessorWeb.Endpoint
     ]
+
     opts = [strategy: :one_for_one, name: JobProcessor.Supervisor]
     Supervisor.start_link(children, opts)
   end

@@ -104,7 +104,7 @@ defmodule JobProcessor.Core do
     generate_ordered_task_list(graph, task_map)
   end
 
-  @spec generate_ordered_task_list(Graph.t, map()) :: [Task.t]
+  @spec generate_ordered_task_list(Graph.t(), map()) :: [Task.t()]
   defp generate_ordered_task_list(graph, task_map) do
     Elixir.Graph.Reducers.Bfs.reduce(
       graph,
@@ -114,7 +114,7 @@ defmodule JobProcessor.Core do
     |> Enum.reverse()
   end
 
-  @spec build_graph(map()) :: Graph.t
+  @spec build_graph(map()) :: Graph.t()
   defp build_graph(task_map) do
     g = Graph.new()
     tasks = Map.values(task_map)
