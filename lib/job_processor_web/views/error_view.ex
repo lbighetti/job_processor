@@ -1,4 +1,5 @@
 defmodule JobProcessorWeb.ErrorView do
+  @moduledoc false
   use JobProcessorWeb, :view
 
   # If you want to customize a particular status code

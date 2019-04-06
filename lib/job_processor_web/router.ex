@@ -1,4 +1,5 @@
 defmodule JobProcessorWeb.Router do
+  @moduledoc false
   use JobProcessorWeb, :router
 
   pipeline :api do

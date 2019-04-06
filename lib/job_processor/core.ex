@@ -27,13 +27,52 @@ defmodule JobProcessor.Core do
     |> Ecto.Changeset.apply_action(:insert)
   end
 
-  @spec parse_tasks(map()) :: [{:ok, Task.t()} | {:error, Ecto.Changeset.t()}]
+  @doc """
+  Parses a list of maps with tasks parameters into `JobProcessor.Core.Task` structs.
+  Will return a tuple with operation status on the first term a list on the second, either of
+  sucessfully parsed tasks or of changeset errors.
+
+  ## Examples
+
+      iex> parse_tasks([%{name: "task-1", command: "touch /tmp/file1"}, {
+         "name":"task-3",
+         "command":"echo 'Hello World!' > /tmp/file1",
+         "requires":[
+            "task-1"
+         ]
+      })
+      [{:ok, %Task{}}, {:ok, %Task{}}]
+
+      iex> parse_tasks(%{field: bad_value})
+      [{:error, %Ecto.Changeset{}}, {:error, %Ecto.Changeset{}}]
+
+  """
+  @spec parse_tasks([map()]) :: [{:ok, Task.t()} | {:error, Ecto.Changeset.t()}]
   def parse_tasks(tasks) do
     tasks
     |> Enum.map(&Core.parse_task/1)
   end
 
-  @spec process_job(map()) :: {:error, [Ecto.Changeset.t()]} | {:ok, [Task.t()]}
+  @doc """
+  Parses a list of parameters to be converted to tasks. The return will be a tuple on the fist element,
+  plus a list on the second element, either of errors or of the parsed tasks.
+
+  ## Examples
+
+      iex> process_job([%{name: "task-1", command: "touch /tmp/file1"}, {
+         "name":"task-3",
+         "command":"echo 'Hello World!' > /tmp/file1",
+         "requires":[
+            "task-1"
+         ]
+      })
+      [{:ok, [%Task{}, %Task{}]}]
+
+      iex> process_job(%{field: bad_value})
+      [{:error, [%Ecto.Changeset{}, %Ecto.Changeset{}}]
+
+  """
+  @spec process_job([map()]) :: {:error, [Ecto.Changeset.t()]} | {:ok, [Task.t()]}
   def process_job(params) do
     parsed_tasks = parse_tasks(params)
 
@@ -60,11 +99,12 @@ defmodule JobProcessor.Core do
   end
 
   @spec order_tasks(map()) :: [Task.t()]
-  def order_tasks(task_map) do
+  defp order_tasks(task_map) do
     graph = build_graph(task_map)
     generate_ordered_task_list(graph, task_map)
   end
 
+  @spec generate_ordered_task_list(Graph.t, map()) :: [Task.t]
   defp generate_ordered_task_list(graph, task_map) do
     Elixir.Graph.Reducers.Bfs.reduce(
       graph,
@@ -74,6 +114,7 @@ defmodule JobProcessor.Core do
     |> Enum.reverse()
   end
 
+  @spec build_graph(map()) :: Graph.t
   defp build_graph(task_map) do
     g = Graph.new()
     tasks = Map.values(task_map)

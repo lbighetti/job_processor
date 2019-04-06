@@ -1,4 +1,5 @@
 defmodule JobProcessorWeb.ChangesetView do
+  @moduledoc false
   use JobProcessorWeb, :view
   alias JobProcessorWeb.ChangesetView
 

@@ -1,4 +1,5 @@
 defmodule JobProcessorWeb.TaskController do
+  @moduledoc false
   use JobProcessorWeb, :controller
   use PhoenixSwagger
 

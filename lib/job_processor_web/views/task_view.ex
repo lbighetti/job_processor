@@ -1,4 +1,5 @@
 defmodule JobProcessorWeb.TaskView do
+  @moduledoc false
   use JobProcessorWeb, :view
   alias JobProcessorWeb.TaskView
 

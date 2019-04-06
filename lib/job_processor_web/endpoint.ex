@@ -1,4 +1,5 @@
 defmodule JobProcessorWeb.Endpoint do
+  @moduledoc false
   use Phoenix.Endpoint, otp_app: :job_processor
 
   socket "/socket", JobProcessorWeb.UserSocket,
