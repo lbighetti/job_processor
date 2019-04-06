@@ -93,24 +93,46 @@ $ curl -d @mytasks.json -X POST -H 'Accept: text/plain' -H "Content-Type:applica
 
 ## Development
 
+Requirements
+
+- elixir 1.8
+- erlang 21.2
+
 To start your Phoenix server:
 
   * Install dependencies with `mix deps.get`
   * Create and migrate your database with `mix ecto.setup`
   * Start Phoenix endpoint with `mix phx.server`
 
------
+### API documentation
 
-## Todos
+- You can open Swagger API documentation at `http://localhost:4000/api/swagger`.  
+- You can re-generate or update it by running `mix phx.swagger.generate`.  
 
-- [x] bash feature
-- [ ] improvements
-  - [ ] task names not duplicate
-  - [ ] graph aciclyc
-  - [ ] improve this map() spec? define key as Task.name and value as Task
-- [ ] typespecs / dialyzer
-  - [x] core
-- [ ] exdoc
-- [ ] swagger
-  - [x] setup
-  - [ ] post example
+### Tests & Coverage
+
+- Run tests with `mix test`
+- Run coverage with [`mix coveralls`](https://hexdocs.pm/excoveralls/Mix.Tasks.Coveralls.html)
+- [Codecov](https://codecov.io/gh/lbighetti/job_processor) is being used as a coverage webpage.
+
+### Static Code Analysis
+
+Credo is a static code analysis tool for the Elixir language with a focus on teaching and code consistency.
+
+- Run credo with `mix credo`
+
+### Dialyzer
+
+Dialyzer can analyze code with typespec to find type inconsistencies and possible bugs.
+
+* Run dialyzer with `mix dialyzer`
+
+Be aware this takes a while to run for the first time. Runs after the first will be a lot faster.
+
+### Documentation
+
+You can update or re-generate this documentation with
+
+* `mix docs && open doc/index.html`
+
+
