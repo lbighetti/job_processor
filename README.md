@@ -110,8 +110,9 @@ To start your Phoenix server:
 
 ### API documentation
 
-- You can open Swagger API documentation at `http://localhost:4000/api/swagger`.  
-- You can re-generate or update it by running `mix phx.swagger.generate`.  
+- You can open production Swagger API documentation at `https://circleci.com/gh/lbighetti/job_processor/api/swagger`.  
+- You can re-generate or update it by running `mix phx.swagger.generate`
+- locally will be available at `http://localhost:4000/api/swagger` once phoenix is running.
 
 ### Tests & Coverage
 
