@@ -46,6 +46,10 @@ Here the definition of a job is a collection of tasks, where each task has a nam
 ### Responses
 
 The server can respond in two format: JSON and bash script in the form of text.
+The content will be negotiated via `Accept` header:
+
+- `Accept: application/json` will give out a json response.
+- `Accept: text/plain` will respond with the bash script in plain text.
 
 #### JSON
 
@@ -74,7 +78,7 @@ The above example will be processed to this response:
 
 #### Bash Script
 
-The bash script response will be of type text, and will look like this:
+The bash script response will look like this:
 
 ```bash
 #!/usr/bin/env bash
@@ -131,19 +135,19 @@ Be aware this takes a while to run for the first time. Runs after the first will
 
 ### Documentation
 
-You can update or re-generate this documentation with
+Code documentation generated with ex_doc:
 
 * `mix docs && open doc/index.html`
 
 ### Continuous Integration
 
-The project is being built and tested in Circle CI at https://circleci.com/gh/lbighetti/job_processor
+The project is being built and tested in [Circle CI](https://circleci.com/gh/lbighetti/job_processor).
 
 ### Deploy
 
 Using Distillery:
 
-* `mix release` to generate release
+* `mix release` to generate release.
   
 Currently being deployed to production at gigalixir:
 
