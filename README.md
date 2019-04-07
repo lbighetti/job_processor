@@ -141,13 +141,19 @@ The project is being built and tested in Circle CI at https://circleci.com/gh/lb
 
 ### Deploy
 
-* `mix release`
+Using Distillery:
+
+* `mix release` to generate release
+  
+Currently being deployed to production at gigalixir:
+
+* https://job-processor.gigalixirapp.com/process_job
 
 ## Design decisions, assumptions and reasoning
 
 ### Assumptions
 
-I made the assumption that authentication, authorization and persistence are outside of scope of this test.
+I made the assumption that authentication, authorization and persistence are outside the scope of this test.
 
 ### Phoenix
 
