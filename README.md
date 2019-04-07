@@ -135,6 +135,13 @@ You can update or re-generate this documentation with
 
 * `mix docs && open doc/index.html`
 
+### Continuous Integration
+
+The project is being built and tested in Circle CI at https://circleci.com/gh/lbighetti/job_processor
+
+### Deploy
+
+* `mix release`
 
 ## Design decisions, assumptions and reasoning
 
@@ -147,3 +154,13 @@ I made the assumption that authentication, authorization and persistence are out
 For functionality exposed via HTTP, Phoenix seemed like a good choice. It has great productivity, facilitators, code generators and much more at the cost of very little overhead.
 I started a new phoenix app without frontend and also without Ecto, because of the above assumptions.
 
+### Graph
+
+The problem of ordering tasks seemed to me to be in the domain of Graphs. Since elixir doesn't have 
+this data structure native, I used a library.
+
+Then, the basic idea was to build a directed acyclic graph, and to do a breadth-first scan to find all necessary tasks in an order that makes sense.
+
+It looks something like this:  
+
+![breadth first](https://upload.wikimedia.org/wikipedia/commons/4/46/Animated_BFS.gif)
